@@ -5,6 +5,7 @@ import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///home_inventory.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default_secret_key')
 db.init_app(app)
 
@@ -14,8 +15,17 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    items = Item.query.all()
-    return render_template('index.html',items=items)
+    # items = Item.query.all()
+
+    # 分页逻辑
+    page = request.args.get('page', 1, type=int)  # 获取当前页码，默认为第一页
+    per_page = 10  # 每页显示的条数
+    pagination = Item.query.paginate(page=page, per_page=per_page, error_out=False)
+    items = pagination.items
+    total_pages = pagination.pages  # 总页数
+    current_page = pagination.page  # 当前页码
+
+    return render_template('index.html',items=items,total_pages=total_pages, current_page=current_page)
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_item():

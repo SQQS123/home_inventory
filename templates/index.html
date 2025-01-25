@@ -9,7 +9,7 @@
     <h1>家庭物品管理</h1>
     <a href="/add">添加物品</a>
     <ul>
-        <!-- 这里可以实现分页 -->
+        <!-- 未实现分页 -->
         {% for item in items %}
         <li>
             <!-- 可以把下面的变量放在标签里，使其更美观 -->
@@ -19,5 +19,27 @@
         </li>
         {% endfor %}
     </ul>
+    <!-- 分页 -->
+    <table>
+        <thead>
+            <tr>
+                <td>物品名称</td><td>物品所属房间</td><td>物品所属类别</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{item.name}}</td><td>{{item.room}}</td><td>{{item.category}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- 选择页数 -->
+    <div class="pagination">
+        {% for i in range(1, total_pages + 1) %}
+            <a href="/items?page={{ i }}" class="{{ 'active' if i == current_page else '' }}">{{ i }}</a>
+        {% endfor %}
+    </div>
 </body>
 </html>
