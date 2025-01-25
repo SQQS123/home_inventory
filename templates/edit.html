@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑物品</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+</head>
+<body>
+    <h1>编辑物品</h1>
+    <form method="post">
+        <input type="text" name="name" value="{{ item.name }}" required>
+        <input type="text" name="description" value="{{ item.description }}">
+        <input type="text" name="room" value="{{ item.room }}" required>
+        <input type="text" name="category" value="{{ item.category }}" required>
+        <button type="submit">保存</button>
+    </form>
+</body>
+</html>

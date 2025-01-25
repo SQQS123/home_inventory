@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加物品</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+</head>
+<body>
+    <h1>添加物品</h1>
+    <form method="post">
+        <input type="text" name="name" placeholder="名称" required>
+        <input type="text" name="description" placeholder="描述">
+        <input type="text" name="room" placeholder="房间" required>
+        <input type="text" name="category" placeholder="类别" required>
+        <button type="submit">添加</button>
+    </form>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>

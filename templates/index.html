@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>家庭物品管理</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+</head>
+<body>
+    <h1>家庭物品管理</h1>
+    <a href="/add">添加物品</a>
+    <ul>
+        <!-- 这里可以实现分页 -->
+        {% for item in items %}
+        <li>
+            <!-- 可以把下面的变量放在标签里，使其更美观 -->
+            {{ item.name }} - {{ item.room }} ({{ item.category }})
+            <a href="/delete/{{ item.id }}">删除</a>
+            <a href="/edit/{{ item.id }}">编辑</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
