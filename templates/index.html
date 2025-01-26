@@ -17,7 +17,7 @@
 <body>
     <h1>家庭物品管理</h1>
     <a href="/add">添加物品</a>
-    <!--
+    <!-- 这里是没有分页的代码
     <ul>
         
         {% for item in items %}
@@ -34,14 +34,17 @@
     <table>
         <thead>
             <tr>
-                <td>物品名称</td><td>物品所属房间</td><td>物品所属类别</td>
+                <td>物品名称</td><td>物品所属房间</td><td>物品所属类别</td><td>物品详细描述</td>
                 <td>删除</td><td>编辑</td>
             </tr>
         </thead>
         <tbody>
             {% for item in items %}
             <tr>
-                <td>{{item.name}}</td><td>{{item.room}}</td><td>{{item.category}}</td>
+                <!-- 显示区 -->
+                <td>{{item.name}}</td><td>{{item.room}}</td><td>{{item.category}}</td><td>{{item.description}}</td>
+
+                <!-- 操作区 -->
                 <td>
                     <button onclick="confirmDelete({{ item.id }})">删除</button>
                     <form id="delete-form-{{ item.id }}" action="{{ url_for('delete_item', item_id=item.id) }}" method="POST" style="display: none;">
