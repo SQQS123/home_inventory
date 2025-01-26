@@ -4,32 +4,52 @@
     <meta charset="UTF-8">
     <title>家庭物品管理</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+    <script>
+        // 删除确认函数
+        function confirmDelete(Id) {
+            if (confirm("确定要删除该物品吗？")) {
+                // 如果用户确认删除，提交表单
+                document.getElementById('delete-form-' + Id).submit();
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>家庭物品管理</h1>
     <a href="/add">添加物品</a>
+    <!--
     <ul>
-        <!-- 未实现分页 -->
+        
         {% for item in items %}
         <li>
-            <!-- 可以把下面的变量放在标签里，使其更美观 -->
+
             {{ item.name }} - {{ item.room }} ({{ item.category }})
             <a href="/delete/{{ item.id }}">删除</a>
             <a href="/edit/{{ item.id }}">编辑</a>
         </li>
         {% endfor %}
     </ul>
+-->
     <!-- 分页 -->
     <table>
         <thead>
             <tr>
                 <td>物品名称</td><td>物品所属房间</td><td>物品所属类别</td>
+                <td>删除</td><td>编辑</td>
             </tr>
         </thead>
         <tbody>
             {% for item in items %}
             <tr>
                 <td>{{item.name}}</td><td>{{item.room}}</td><td>{{item.category}}</td>
+                <td>
+                    <button onclick="confirmDelete({{ item.id }})">删除</button>
+                    <form id="delete-form-{{ item.id }}" action="{{ url_for('delete_item', item_id=item.id) }}" method="POST" style="display: none;">
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                    </form>
+                </td>
+                <!-- <td><a href="/delete/{{item.id}}">删除</a></td> -->
+                <td><a href="/edit/{{item.id}}">编辑</a></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -38,7 +58,8 @@
     <!-- 选择页数 -->
     <div class="pagination">
         {% for i in range(1, total_pages + 1) %}
-            <a href="/items?page={{ i }}" class="{{ 'active' if i == current_page else '' }}">{{ i }}</a>
+        	<!-- 这里的href用的是＠app.route('/')里面的内容 -->
+            <a href="/?page={{ i }}" class="{{ 'active' if i == current_page else '' }}">{{ i }}</a>
         {% endfor %}
     </div>
 </body>

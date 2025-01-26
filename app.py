@@ -42,7 +42,7 @@ def add_item():
         return redirect(url_for('index'))
     return render_template('add.html')
 
-@app.route('/delete/<int:item_id>')
+@app.route('/delete/<int:item_id>',methods=['POST'])
 def delete_item(item_id):
     item = Item.query.get_or_404(item_id)
     db.session.delete(item)
